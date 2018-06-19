@@ -5,12 +5,12 @@ import java.util.Date;
 import domain.*;
 import service.AccountService;
 
-public class AccountServiceImpl implements AccountService{
+public class AccountServiceImplTest implements AccountService{
 	AccountBean[] list;
 	int count;
 	
 	
-	public AccountServiceImpl() {
+	public AccountServiceImplTest() {
 		list = new AccountBean[10];
 		count=0;
 	}
@@ -164,37 +164,37 @@ public class AccountServiceImpl implements AccountService{
 	@Override
 	public String deleteAccount(AccountBean account) {
 		String msg = "";
+		int index = 0;
 		String pass = account.getPass().split("/")[0];
 		String confirmpass = account.getPass().split("/")[1];
 		if(pass.equals(confirmpass)) {
 			account.setPass(pass);	
-			account=findById(account);
+			for(int i=0;i<count;i++) {
+				if(account.getUid().equals(list[i].getUid())&&
+				   account.getPass().equals(list[i].getPass())) {
+					account = list[i]; 
+					index = i;
+					break;
+				}
+			}
+			
 			if(account.getName() == null) {
 				msg = "ID 혹은 비번 틀림";
 			}else {
-				rearrangeAccounts(findIndexAccount(account));
+				 list[index] = list[--count];
+				 list[count] = null;
 				msg = "삭제 성공";
 			}
+			
 		}else {
 			msg = "비밀번호 불일치";
 		}
 		return msg;
 	}
-	
-	 public int findIndexAccount(AccountBean account) {
-		 int index = 0;
-		 for(int i=0;i<count;i++) {
-				if(account.getUid().equals(list[i].getUid())&&
-					account.getPass().equals(list[i].getPass())) {
-					index = i; break;
-				}
-			}
-		 return index;
-	 }
-	 
-	 public void rearrangeAccounts(int index) {
-		 list[index] = list[count-1];
-		 list[count-1] = null;
-		 count--;
-	 }
 }
+
+
+
+
+
+

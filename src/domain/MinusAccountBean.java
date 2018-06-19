@@ -17,14 +17,14 @@ public class MinusAccountBean extends AccountBean{
 				"%s \n %s \n 계좌번호 : %s \n 이름 : %s \n ID : %s \n 비밀번호 : %s \n "
 				+ "생성일 : %s \n 잔액 : %s 원 \n 대출한도 : %s ",
 				BANK_NAME,
-				getAccountType(),
-				getAccountNo(),
-				getName(),
-				getUid(),
+				ACCOUNT_TYPE,
+				accountNo,
+				name,
+				uid,
 				"****",
-				getCreateDate(),
-				getMoney(),
-				getLimit()
+				createDate,
+				money,
+				limit
 				); 
 	}
 }
