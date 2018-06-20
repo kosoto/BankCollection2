@@ -1,124 +1,73 @@
 package serviceImpl;
+import java.util.List;
+import java.lang.reflect.Member;
+import java.util.ArrayList;
 import domain.MemberBean;
 import domain.StaffBean;
 import domain.UserBean;
 import service.*;
 
 public class MemberServiceImpl implements MemberService{
-	public MemberBean[] list;
-	public int count;
+	List<MemberBean> list;
+	
 	public MemberServiceImpl() {
-		list = new MemberBean[10];
-		count = 0;
+		list = new ArrayList<MemberBean>();
 	}
 	
 	@Override
-	public void createUser(MemberBean member) {
-		((UserBean) member).setCreditRating("7");
-		list[count++] = member;
-	}
-	
-	@Override
-	public void createStaff(MemberBean member) {
-		((StaffBean) member).setAccessNum("1234");
-		list[count++] = member;
+	public void createUser(UserBean user) {
+		user.setCreditRating("7등급");
+		System.out.println("실행결과" + ((list.add(user))?"등록성공":"등록실패"));
 	}
 
 	@Override
-	public MemberBean[] list() {
+	public void createStaff(StaffBean staff) {
+		staff.setAccessNum("1234");
+		System.out.println("실행결과" + ((list.add(staff))?"등록성공":"등록실패"));
+	}
+
+	@Override
+	public List<MemberBean> list() {
 		return list;
 	}
 
 	@Override
-	public MemberBean findById(MemberBean member) {
-		String id = member.getUid();
-		String pass = member.getPass();
-		MemberBean serchedMember = new MemberBean();
-		for(int i=0;i<count;i++) {
-			if(id.equals(list[i].getUid())
-					&&
-				pass.equals(list[i].getPass())
-					) {
-				serchedMember = list[i];
-				break;
+	public List<MemberBean> search(String param) {
+		List<MemberBean> temp = new ArrayList<>();
+		for(int i=0;i<list.size();i++) {
+			if(param.equals(list.get(i).getName())) {
+				temp.add(list.get(i));
 			}
 		}
-		return serchedMember;
+		return temp;
 	}
 
 	@Override
-	public MemberBean[] findByName(String name) {
-		int num = 0;
-		for(int i=0;i<count;i++) {
-			if(name.equals(list[i].getName())) {
-				num++;
+	public MemberBean search(MemberBean member) {
+		MemberBean temp = new MemberBean();
+		for(int i=0;i<list.size();i++) {
+			if(member.getUid().equals(list.get(i).getUid())) {
+				temp = list.get(i);break;
 			}
 		}
-		MemberBean[] members = new MemberBean[num];
+		return temp;
+	}
+
+	@Override
+	public void update(MemberBean member) {
+		//search(member).setPass(member.getPass());
+		MemberBean temp = new MemberBean();
+		temp = search(member);
+		list.remove(temp);
+		temp.setPass(member.getPass());
+		list.add(temp);
+	}
+
+	@Override
+	public void delete(MemberBean member) {
+		//list.remove(list.indexOf(search(member)));
+		list.remove(search(member));
 		
-		for(int i=0,j=0;i<count&&j<num;i++) {
-			if(name.equals(list[i].getName())) {
-				members[j++] = list[i];
-			}
-		}
-		return members;
-	}
-
-	@Override
-	public int checkCount() {
-		return count;
-	}
-
-	@Override
-	public String withdraw(MemberBean member) {
-		String msg = "";
-		String id = member.getUid();
-		String pass = member.getPass().split("/")[0];
-		String confirmPass = member.getPass().split("/")[1];
-		member.setPass(pass);
-		if(pass.equals(confirmPass)) {
-			for(int i=0;i<count;i++) {
-				if(id.equals(list[i].getUid()) &&
-					pass.equals(list[i].getPass())
-							){
-						list[i] = list[--count];
-						list[count]=null;
-						msg = "삭제완료";
-						break;
-					}else {
-						msg = "일치하는 정보가 없음";
-					}	
-			}
-		}else {
-			msg = "비밀번호가 일치하지 않음";
-		}
-		return msg;
-	}
-
-	@Override
-	public String changePass(MemberBean member) {
-		String msg = "";
-		String id = member.getUid();
-		String pass = member.getPass().split("/")[0];
-		String newPass = member.getPass().split("/")[1];
-		member.setPass(pass);
-		if(!pass.equals(newPass)) {
-			for(int i=0;i<count;i++) {
-				if(id.equals(list[i].getUid()) &&
-					pass.equals(list[i].getPass())
-						) {
-					list[i].setPass(newPass);
-					msg = "비밀번호 변경 성공";
-					break;
-				}else {
-					msg = "정보가 없습니다.";
-				}
-			}
-			
-		}else {
-			msg = "새로운 비밀번호가 아닙니다.";
-		}
-		return msg;
 	}
 
 	
