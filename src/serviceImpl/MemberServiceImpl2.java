@@ -34,9 +34,9 @@ public class MemberServiceImpl2 implements MemberService2{
 	@Override
 	public List<MemberBean> search(String param) {
 		List<MemberBean> temp = new ArrayList<>();
-		for(int i=0;i<list.size();i++) {
-			if(param.equals(list.get(i).getName())) {
-				temp.add(list.get(i));
+		for(MemberBean e : list) {
+			if(param.equals(e.getName())) {
+				temp.add(e);
 			}
 		}
 		return temp;
@@ -45,9 +45,9 @@ public class MemberServiceImpl2 implements MemberService2{
 	@Override
 	public MemberBean search(MemberBean member) {
 		MemberBean temp = new MemberBean();
-		for(int i=0;i<list.size();i++) {
-			if(member.getUid().equals(list.get(i).getUid())) {
-				temp = list.get(i);break;
+		for(MemberBean e : list) {
+			if(member.getUid().equals(e.getUid())) {
+				temp = e; break;
 			}
 		}
 		return temp;
@@ -55,18 +55,15 @@ public class MemberServiceImpl2 implements MemberService2{
 
 	@Override
 	public void update(MemberBean member) {
-		//search(member).setPass(member.getPass());
 		MemberBean temp = new MemberBean();
 		temp = search(member);
 		list.remove(temp);
 		temp.setPass(member.getPass());
 		list.add(temp);
-		//list.get(list.indexOf(search(member))).setPass(member.getPass());
 	}
 
 	@Override
 	public void delete(MemberBean member) {
-		//list.remove(list.indexOf(search(member)));
 		list.remove(search(member));
 		
 	}

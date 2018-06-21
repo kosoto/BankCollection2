@@ -27,9 +27,9 @@ public class AccountServiceImpl2 implements AccountService2{
 	@Override
 	public List<AccountBean> search(String word) {
 		List<AccountBean> temp = new ArrayList<>();
-		for(int i=0;i<list.size();i++) {
-			if(word.equals(list.get(i).getName())) {
-				temp.add(list.get(i));
+		for(AccountBean e : list) {
+			if(word.equals(e.getName())) {
+				temp.add(e);
 			}
 		}
 		return temp;
@@ -38,9 +38,9 @@ public class AccountServiceImpl2 implements AccountService2{
 	@Override
 	public AccountBean search(AccountBean account) {
 		AccountBean temp = new AccountBean();
-		for(int i=0;i<list.size();i++) {
-			if(account.getUid().equals(list.get(i).getUid())) {
-				temp = list.get(i);break;
+		for(AccountBean e : list) {
+			if(account.getUid().equals(e.getUid())) {
+				temp = e; break;
 			}
 		}
 		return temp;

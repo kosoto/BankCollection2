@@ -12,6 +12,42 @@ enum AdminButt{
 		REMOVE
 		};
 public class AdminController {
+	
+	public void add() {
+		MemberService service = new MemberServiceImpl();
+		MemberBean member;
+	}
+	
+	public void list() {
+		MemberService service = new MemberServiceImpl();
+		MemberBean member;
+	}
+	
+	public void findById() {
+		MemberService service = new MemberServiceImpl();
+		MemberBean member;
+	}
+	
+	public void findByName() {
+		MemberService service = new MemberServiceImpl();
+		MemberBean member;
+	}
+	
+	public void count() {
+		MemberService service = new MemberServiceImpl();
+		MemberBean member;
+	}
+	
+	public void updata() {
+		MemberService service = new MemberServiceImpl();
+		MemberBean member;
+	}
+	
+	public void remove() {
+		MemberService service = new MemberServiceImpl();
+		MemberBean member;
+	}
+	
 	public static void main(String[] args) {
 		MemberService service = new MemberServiceImpl();
 		MemberBean member;

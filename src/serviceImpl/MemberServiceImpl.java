@@ -1,7 +1,6 @@
 package serviceImpl;
 import java.util.Map;
-import java.lang.reflect.Member;
-import java.util.HashMap;
+import java.util.*;
 import domain.*;
 import service.*;
 
@@ -30,12 +29,18 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public Map<String,MemberBean> findByName(String name) {
-		Map<String,MemberBean> temp = new HashMap<>();
-		for(String key : map.keySet()) {
-			if(name.equals(map.get(key).getName())) {
-				temp.put(key, map.get(key));
+	public List<MemberBean> findByName(String name) {
+		List<MemberBean> temp = new ArrayList<>();
+		Set<MemberBean> set = new HashSet<>();
+		for(Map.Entry<String, MemberBean> e : map.entrySet()) {
+			if(name.equals(e.getValue().getName())) {
+				set.add(e.getValue());	
 			}
+		}
+		Iterator<MemberBean> it = set.iterator();
+		while(it.hasNext()) { // 다음이 있으면 true 없으면 false
+			temp.add(it.next());	
+			
 		}
 		
 		return temp;
@@ -48,7 +53,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public void updatePassword(MemberBean member) {
+	public void changePass(MemberBean member) {
 		String id = member.getUid();
 		String pass = member.getPass().split("/")[0];
 		String newPass = member.getPass().split("/")[1];
@@ -70,6 +75,11 @@ public class MemberServiceImpl implements MemberService{
 	public void deleteMember(MemberBean member) {
 		map.remove(findById(member));
 		
+	}
+
+	@Override
+	public int checkCount() {
+		return map.size();
 	}
 
 	

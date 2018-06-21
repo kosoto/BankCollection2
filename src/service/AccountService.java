@@ -1,14 +1,15 @@
 package service;
 import java.util.Map;
+import java.util.List;
 import domain.*;
 
 public interface AccountService {
-	public void creataAccount(AccountBean account);
-	public void creataMinus(MinusAccountBean account);
+	public void createAccount(AccountBean account);
+	public void createMinus(MinusAccountBean account);
 	public Map<String,AccountBean> list();
-	public Map<String,AccountBean> findByName(String word);
+	public List<AccountBean> findByName(String word);
 	public AccountBean findById(AccountBean account);
-	public void updatePassword(AccountBean account);
+	public void changePass(AccountBean account);
 	public void deleteAccount(AccountBean account);
 	
 }

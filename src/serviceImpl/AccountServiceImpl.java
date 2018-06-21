@@ -1,9 +1,7 @@
 package serviceImpl;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 import domain.*;
 import service.AccountService;
 
@@ -14,13 +12,13 @@ public class AccountServiceImpl implements AccountService{
 		map = new HashMap<>();
 	}
 	@Override
-	public void creataAccount(AccountBean account) {
+	public void createAccount(AccountBean account) {
 		account.setAccountType();
 		map.put(account.getUid(), account);
 	}
 
 	@Override
-	public void creataMinus(MinusAccountBean minusAccount) {
+	public void createMinus(MinusAccountBean minusAccount) {
 		minusAccount.setAccountType();
 		map.put(minusAccount.getUid(), minusAccount);		
 	}
@@ -31,13 +29,14 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-	public Map<String, AccountBean> findByName(String name) {
-		Map<String, AccountBean> searchedList= new HashMap<>();
-		for(String key : map.keySet()) {
-			if(name.equals(map.get(key).getName())) {
-				searchedList.put(key, map.get(key));
-			}
+	public List<AccountBean> findByName(String name) {
+		List<AccountBean> searchedList = new ArrayList<>();
+		Set<AccountBean> set = new HashSet<>();
+		for(Map.Entry<String, AccountBean> e : map.entrySet()) {
+			
 		}
+		
+		
 		return searchedList;
 	}
 
@@ -47,7 +46,7 @@ public class AccountServiceImpl implements AccountService{
 	}
 
 	@Override
-	public void updatePassword(AccountBean account) {
+	public void changePass(AccountBean account) {
 		String id = account.getUid();
 		String pass = account.getPass().split("/")[0];
 		String newPass = account.getPass().split("/")[1];
