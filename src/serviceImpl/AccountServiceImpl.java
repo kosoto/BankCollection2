@@ -3,41 +3,30 @@ package serviceImpl;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import domain.*;
+import repositoryImpl.AccountDAOImpl;
 import service.AccountService;
 
 public class AccountServiceImpl implements AccountService{
+	private static AccountService instance = new AccountServiceImpl();
 	Map<String,AccountBean> map;
-
-	public AccountServiceImpl() {
-		map = new HashMap<>();
-	}
+	public static AccountService getInstance() {return instance;}
+	private AccountServiceImpl() {}
+	
 	@Override
 	public void createAccount(AccountBean account) {
+		System.out.println("==========멤버 서비스==============");
+		System.out.println("컨트롤러에서 넘어온 객체:"+account);
 		account.setAccountType();
-		map.put(account.getUid(), account);
+		account.setAccountNo(AdminServiceImpl.getInstance().createAccountNo());
+		account.setCreateDate(AdminServiceImpl.getInstance().createDate());
+		AccountDAOImpl.getInstance().insertAccount(account);
+		//map.put(account.getUid(), account);
 	}
 
 	@Override
 	public void createMinus(MinusAccountBean minusAccount) {
 		minusAccount.setAccountType();
 		map.put(minusAccount.getUid(), minusAccount);		
-	}
-
-	@Override
-	public Map<String, AccountBean> list() {
-		return map;
-	}
-
-	@Override
-	public List<AccountBean> findByName(String name) {
-		List<AccountBean> searchedList = new ArrayList<>();
-		Set<AccountBean> set = new HashSet<>();
-		for(Map.Entry<String, AccountBean> e : map.entrySet()) {
-			
-		}
-		
-		
-		return searchedList;
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package controller;
 import javax.swing.JOptionPane;
-import controller.AccountController.AccountButt;
 import domain.*;
 import service.*;
 import serviceImpl.*;
@@ -12,82 +11,46 @@ enum AdminButt{
 		REMOVE
 		};
 public class AdminController {
+	private static AdminController instance = new AdminController();
+	public static AdminController getInstance() {return instance;}
+	private AdminController() {};
 	
+
 	public void add() {
-		MemberService service = new MemberServiceImpl();
 		MemberBean member;
+		member = new StaffBean();
+		member.setName(JOptionPane.showInputDialog("이름은?"));
+		member.setUid(JOptionPane.showInputDialog("아이디?"));
+		member.setPass(JOptionPane.showInputDialog("비밀번호?"));
+		member.setSsn(JOptionPane.showInputDialog("주민번호?"));
+		member.setPhone(JOptionPane.showInputDialog("전화번호?"));
+		member.setAddr(JOptionPane.showInputDialog("집주소?"));
+		member.setEmail(JOptionPane.showInputDialog("이메일주소?"));
+		//service.createStaff((StaffBean) member);
 	}
 	
 	public void list() {
-		MemberService service = new MemberServiceImpl();
 		MemberBean member;
 	}
 	
-	public void findById() {
-		MemberService service = new MemberServiceImpl();
+	public void findMemberById() {
 		MemberBean member;
 	}
 	
-	public void findByName() {
-		MemberService service = new MemberServiceImpl();
+	public void findMemberByName() {
 		MemberBean member;
 	}
 	
 	public void count() {
-		MemberService service = new MemberServiceImpl();
 		MemberBean member;
 	}
 	
 	public void updata() {
-		MemberService service = new MemberServiceImpl();
 		MemberBean member;
 	}
 	
 	public void remove() {
-		MemberService service = new MemberServiceImpl();
 		MemberBean member;
 	}
 	
-	public static void main(String[] args) {
-		MemberService service = new MemberServiceImpl();
-		MemberBean member;
-		while(true) {
-			switch((AdminButt)JOptionPane.showInputDialog(
-					null,
-					"ACCOUNT PAGE",
-					"SELECT MENU",
-					JOptionPane.QUESTION_MESSAGE,
-					null,
-					new AdminButt[] {
-							AdminButt.EXIT,
-							AdminButt.ADD,
-							AdminButt.LIST,
-							AdminButt.FIND_BY_ID,
-							AdminButt.FIND_BY_NAME,
-							AdminButt.COUNT,
-							AdminButt.UPDATE,
-							AdminButt.REMOVE
-					},
-					null
-					)) {
-			case EXIT : return;
-			case ADD :
-				break;
-			case LIST : // 두 종류 모두 리스트
-				break;
-			case FIND_BY_ID : 
-				break;
-			case FIND_BY_NAME : 
-				break;
-			case COUNT : 
-				break;
-			case UPDATE: //일단 비밀번호만 바꾸는거
-				break;
-			case REMOVE :
-				break;
-			default : return;
-			
-			}
-		}
-	}
 }

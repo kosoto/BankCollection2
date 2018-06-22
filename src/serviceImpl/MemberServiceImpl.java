@@ -1,55 +1,34 @@
 package serviceImpl;
-import java.util.Map;
 import java.util.*;
 import domain.*;
+import repository.*;
+import repositoryImpl.*;
 import service.*;
 
 public class MemberServiceImpl implements MemberService{
+	private static MemberService instance = new MemberServiceImpl();
+	public static MemberService getInstance() {return instance;}
+	private MemberServiceImpl() {}
+	
 	Map<String,MemberBean> map;
 	
-	public MemberServiceImpl() {
-		map = new HashMap<>();
+	@Override
+	public void createUser(UserBean member) {
+		System.out.println("==========멤버 서비스==============");
+		System.out.println("컨트롤러에서 넘어온 객체:"+member);
+		member.setCreditRating("7등급");
+		MemberDAOImpl.getInstance().insertMember(member);
+
 	}
+
 	
-	@Override
-	public void createUser(UserBean user) {
-		user.setCreditRating("7등급");
-		map.put(user.getUid(),user);
-	}
+
+
 
 	@Override
-	public void createStaff(StaffBean staff) {
-		staff.setAccessNum("1234");
-		map.put(staff.getUid(),staff);
-	}
-
-	@Override
-	public Map<String,MemberBean> list() {
-		return map;
-	}
-
-	@Override
-	public List<MemberBean> findByName(String name) {
-		List<MemberBean> temp = new ArrayList<>();
-		Set<MemberBean> set = new HashSet<>();
-		for(Map.Entry<String, MemberBean> e : map.entrySet()) {
-			if(name.equals(e.getValue().getName())) {
-				set.add(e.getValue());	
-			}
-		}
-		Iterator<MemberBean> it = set.iterator();
-		while(it.hasNext()) { // 다음이 있으면 true 없으면 false
-			temp.add(it.next());	
-			
-		}
-		
-		return temp;
-	}
-
-	@Override
-	public MemberBean findById(MemberBean member) {
-		System.out.println("찾는 아이디에 해당하는 이름:"+map.get(member.getUid()).getName());
-		return map.get(member.getUid());
+	public String login(MemberBean user) {
+		//System.out.println("찾는 아이디에 해당하는 이름:"+map.get(member.getUid()).getName());
+		return "";
 	}
 
 	@Override
@@ -73,14 +52,10 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void deleteMember(MemberBean member) {
-		map.remove(findById(member));
+	//	map.remove(findById(member));
 		
 	}
 
-	@Override
-	public int checkCount() {
-		return map.size();
-	}
 
 	
 	
